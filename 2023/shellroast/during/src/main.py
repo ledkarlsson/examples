@@ -10,11 +10,16 @@ Language: Python3.10
 from time import sleep, time
 
 from colorama import Fore as f
-from UtilPackage import (
-    EncodingManager,
-)  # EncodingManager(Func: callable, s: str | bytes, Op: int)
 from UtilPackage import Hasher  # Hasher(HashingFunc: callable, s: str | bytes) -> str:
-from UtilPackage import DECODE, ENCODE, ENCODING, HASHING, Command, Shell
+from UtilPackage import (  # EncodingManager(Func: callable, s: str | bytes, Op: int)
+    DECODE,
+    ENCODE,
+    ENCODING,
+    HASHING,
+    Command,
+    EncodingManager,
+    Shell,
+)
 
 DOC = f"""{f.YELLOW}
 
@@ -149,6 +154,19 @@ class Interface:
             else:
                 print(self.Commands[command.CMD]())
 
+    def execute_return(self, command: Command) -> str:
+        """ """
+        if command.CMD in self.DefaultCommands.keys():
+            if len(command.argv) > 0:
+                return self.Commands[command.CMD](*command.argv)
+            else:
+                print(self.DefaultCommands[command.CMD]())
+        elif command.CMD in self.Commands.keys():
+            if len(command.argv) > 0:
+                return self.Commands[command.CMD](*command.argv)
+            else:
+                return self.Commands[command.CMD]()
+
     def run(self) -> None:
         print()
         print(DOC)
@@ -160,10 +178,19 @@ class Interface:
             else:
                 pass
 
+    def test_run(self) -> None:
+        command = Command("HASH", ["Hello", "MD5"])
+        assert "8b1a9953c4611296a827abf8c47804d7" == self.execute_return(command)
+        command = Command("ENCODE", ["Hello", "base64"])
+        assert "SGVsbG8=" == self.execute_return(command)
+        command = Command("DECODE", ["SGVsbG8=", "base64"])
+        assert "Hello" == self.execute_return(command)
+
 
 def main():
     Interface_ = Interface()
-    Interface_.run()
+    # Interface_.run()
+    Interface_.test_run()
 
 
 if __name__ == "__main__":
