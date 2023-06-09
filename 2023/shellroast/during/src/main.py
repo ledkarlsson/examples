@@ -7,17 +7,18 @@ Language: Python3.10
 
 """
 
-from time import sleep, time
+
+from time import sleep
 
 from colorama import Fore as f
-from UtilPackage import Hasher  # Hasher(HashingFunc: callable, s: str | bytes) -> str:
-from UtilPackage import (  # EncodingManager(Func: callable, s: str | bytes, Op: int)
+from UtilPackage import (
     DECODE,
     ENCODE,
     ENCODING,
     HASHING,
     Command,
     EncodingManager,
+    Hasher,
     Shell,
 )
 
@@ -142,7 +143,6 @@ class Interface:
 		"""
 
     def execute(self, command: Command) -> None:
-        """ """
         if command.CMD in self.DefaultCommands.keys():
             if len(command.argv) > 0:
                 print(self.Commands[command.CMD](*command.argv))
@@ -155,7 +155,6 @@ class Interface:
                 print(self.Commands[command.CMD]())
 
     def execute_return(self, command: Command) -> str:
-        """ """
         if command.CMD in self.DefaultCommands.keys():
             if len(command.argv) > 0:
                 return self.Commands[command.CMD](*command.argv)
