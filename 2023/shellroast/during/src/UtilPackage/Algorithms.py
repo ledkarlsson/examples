@@ -1,26 +1,3 @@
-import cryptography
-from .EncodingApi import (
-    EncodingManager,
-    ENCODE,
-    DECODE,
-)  # EncodingManager(Func: callable, s: str | bytes, Op: int)
-from .HashingApi import Hasher  # Hasher(HashingFunc: callable, s: str | bytes) -> str:
-from binascii import hexlify, unhexlify
-
-from hashlib import (
-    blake2b,
-    blake2s,
-    md5,
-    sha1,
-    sha224,
-    sha256,
-    sha384,
-    sha3_224,
-    sha3_256,
-    sha3_384,
-    sha3_512,
-    sha512,
-)
 from base64 import (
     a85decode,
     a85encode,
@@ -35,6 +12,24 @@ from base64 import (
     b85decode,
     b85encode,
 )
+from binascii import hexlify, unhexlify
+from hashlib import (
+    blake2b,
+    blake2s,
+    md5,
+    sha1,
+    sha3_224,
+    sha3_256,
+    sha3_384,
+    sha3_512,
+    sha224,
+    sha256,
+    sha384,
+    sha512,
+)
+
+from .EncodingApi import DECODE, ENCODE, EncodingManager
+from .HashingApi import Hasher
 
 Encoding_Algorithms = [
     "aA85",
